@@ -1,0 +1,2 @@
+lightdm needs additional configuration steps
+  - greeter is not installed by default and must be downloaded seperatly

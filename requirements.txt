@@ -1,0 +1,11 @@
+dash
+imlib2
+nerd-fonts-jetbrains-mono
+feh
+xorg
+xorg-server
+xorg-xsetroot
+lightdm
+base-devel
+git
+lightdm-gtk-greeter
