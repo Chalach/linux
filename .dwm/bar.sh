@@ -54,10 +54,31 @@ clock() {
 	printf "^c$black^^b$blue^ $(date '+%T') "
 }
 
+weather() {
+        get_weather="$(curl -s https://wttr.in/Vahrn\?format\=4)"
+        printf "^c$blue^ $get_weather"
+}
+
+vpn () {
+    VPN=$(nmcli -a | grep 'VPN connection' | sed -e 's/\( VPN connection\)*$//g')
+    
+    if [ "$VPN" = "" ]; then
+        VPN=$(nmcli connection | grep 'wireguard' | sed 's/\s.*$//')
+    fi
+
+    if [ "$VPN" != "" ]; then
+        if [ "$IDENTIFIER" = "unicode" ]; then
+            printf "🔒 %s" "$VPN"
+        else
+            printf "VPN %s" "$VPN"
+        fi
+    fi
+}
+
 while true; do
 
 	[ $interval = 0 ] || [ $(($interval % 3600)) = 0 ] && updates=$(pkg_updates)
 	interval=$((interval + 1))
 
-	sleep 1 && xsetroot -name "$updates $(battery) $(brightness) $(cpu) $(mem) $(wlan) $(clock)"
+        sleep 1 && xsetroot -name "$updates $(weather) $(battery) $(brightness) $(cpu) $(mem) $(vpn) $(wlan) $(clock)"
 done

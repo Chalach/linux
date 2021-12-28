@@ -13,3 +13,5 @@ logo-ls
 zsh
 libxft-bgra
 harfbuzz
+cava
+ranger
