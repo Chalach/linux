@@ -1,0 +1,5 @@
+https://github.com/siduck/dotfiles
+https://github.com/joestandring/dwm-bar
+https://github.com/NvChad/NvChad
+https://github.com/siduck/chadwm
+https://github.com/siduck/st
