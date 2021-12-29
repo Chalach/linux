@@ -51,7 +51,11 @@ wlan() {
 
 clock() {
 	printf "^c$black^ ^b$darkblue^ 󱑆 "
-	printf "^c$black^^b$blue^ $(date '+%T') "
+        if [ "$IDENTIFIER" = "unicode" ]; then
+                printf "📆 %s" "$(date "+%a %d-%m-%y %T")"
+        else
+                printf "DAT %s" "$(date "+%a %d-%m-%y %T")"
+        fi
 }
 
 weather() {
@@ -59,7 +63,7 @@ weather() {
         printf "^c$blue^ $get_weather"
 }
 
-vpn () {
+vpn() {
     VPN=$(nmcli -a | grep 'VPN connection' | sed -e 's/\( VPN connection\)*$//g')
     
     if [ "$VPN" = "" ]; then
@@ -75,10 +79,37 @@ vpn () {
     fi
 }
 
+sound() {
+    VOL=$(pamixer --get-volume)
+    STATE=$(pamixer --get-mute)
+    
+    if [ "$IDENTIFIER" = "unicode" ]; then
+        if [ "$STATE" = "true" ] || [ "$VOL" -eq 0 ]; then
+            printf "🔇"
+        elif [ "$VOL" -gt 0 ] && [ "$VOL" -le 33 ]; then
+            printf "🔈 %s%%" "$VOL"
+        elif [ "$VOL" -gt 33 ] && [ "$VOL" -le 66 ]; then
+            printf "🔉 %s%%" "$VOL"
+        else
+            printf "🔊 %s%%" "$VOL"
+        fi
+    else
+        if [ "$STATE" = "true" ] || [ "$VOL" -eq 0 ]; then
+            printf "MUTE"
+        elif [ "$VOL" -gt 0 ] && [ "$VOL" -le 33 ]; then
+            printf "VOL %s%%" "$VOL"
+        elif [ "$VOL" -gt 33 ] && [ "$VOL" -le 66 ]; then
+            printf "VOL %s%%" "$VOL"
+        else
+            printf "VOL %s%%" "$VOL"
+        fi
+    fi
+}
+
 while true; do
 
 	[ $interval = 0 ] || [ $(($interval % 3600)) = 0 ] && updates=$(pkg_updates)
 	interval=$((interval + 1))
 
-        sleep 1 && xsetroot -name "$updates $(weather) $(battery) $(brightness) $(cpu) $(mem) $(vpn) $(wlan) $(clock)"
+        sleep 1 && xsetroot -name "$updates $(weather) $(battery) $(sound) $(brightness) $(cpu) $(mem) $(vpn) $(wlan) $(clock)"
 done
