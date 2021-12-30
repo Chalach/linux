@@ -7,3 +7,11 @@ All those configuration files are specified for Arch Linux.
 ## Requirements
 To setup this customized configuration some additional packages are required.
 Needed packages must be installed from the `requirements.txt` file via pacman or paru.
+
+## Installation
+This section describes the installation process.
+
+### Requirements
+`paru` is needed to install the following requirements.
+
+[//]: # (sudo pacman -S --needed - < requirements.txt)

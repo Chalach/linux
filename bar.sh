@@ -28,8 +28,14 @@ pkg_updates() {
 }
 
 battery() {
-	get_capacity="$(cat /sys/class/power_supply/BAT0/capacity)"
-	printf "^c$blue^   $get_capacity"
+	CHARGE=$(cat /sys/class/power_supply/BAT0/capacity)
+        STATUS=$(cat /sys/class/power_supply/BAT0/status)
+    
+        if [ "$STATUS" = "Charging" ]; then
+          printf "🔌 %s%% %s" "$CHARGE" "$STATUS"
+        else
+          printf "🔋 %s%% %s" "$CHARGE" "$STATUS"
+        fi
 }
 
 brightness() {
@@ -51,11 +57,7 @@ wlan() {
 
 clock() {
 	printf "^c$black^ ^b$darkblue^ 󱑆 "
-        if [ "$IDENTIFIER" = "unicode" ]; then
-                printf "📆 %s" "$(date "+%a %d-%m-%y %T")"
-        else
-                printf "DAT %s" "$(date "+%a %d-%m-%y %T")"
-        fi
+        printf "$(date "+%a %d-%m-%y %T")"
 }
 
 weather() {

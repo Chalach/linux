@@ -16,3 +16,4 @@ harfbuzz
 cava
 ranger
 pamixer
+bottom
