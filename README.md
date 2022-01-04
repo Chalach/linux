@@ -3,6 +3,7 @@ This repo containes a personalized Linux setup that can be used on multiple syst
 
 ### Attention
 All those configuration files are specified for Arch Linux.
+This setup is mainly for PC's.
 
 ## Requirements
 To setup this customized configuration some additional packages are required.
